@@ -1,0 +1,31 @@
+
+.tvg-navbar {
+    background-color: var(--primary);
+    color: var(--text-on-dark);
+}
+
+.tvg-navbar-brand-link{
+    color: var(--text-on-dark);
+    &:hover {
+        color: var(--text-on-dark);
+    }
+}
+
+.tvg-navbar-brand-text {
+    font-size: 29pt;
+}
+
+.tvg-navbar-link {
+    color: var(--text-on-dark);
+    &:hover {
+        color: var(--secondary);
+    }
+}
+
+.tvg-navbar-toggler {
+    background-color: var(--text-on-dark);
+}
+
+.tvg-navbar-nav {
+    font-size: 1.3rem;
+}

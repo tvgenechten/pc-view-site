@@ -1,0 +1,9 @@
+/*Bootstrap:*/
+@import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css");
+/*Fonts*/
+@import "fonts.css";
+/*Vars*/
+@import "vars.css";
+/*Custom css*/
+@import "navbar.css";
+@import "camera.css";

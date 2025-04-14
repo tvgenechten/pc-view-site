@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>PC View</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="PC Vieuw">
+    <meta name="description" content="De AI tool die jouw opweg helpt in de wereld van PC's">
+    <link rel="shortcut icon" href="/common/images/favicon.svg" type="image/x-icon">
+    <link rel="stylesheet" href="/common/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/common/css/main.css">
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-md tvg-navbar">
+        <div class="container">
+            <div class="d-flex">
+                <a class="navbar-brand tvg-navbar-brand-link d-flex align-items-center justify-content-center" href="#"><img
+                    class="col-2" src="/common/images/logo-nt-white.svg"
+                    alt="Logo PC Vieuw"><span
+                    class="tvg-navbar-brand-text">&nbsp;PC&nbsp;View</span></a>
+                <button class="navbar-toggler tvg-navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav tvg-navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link tvg-navbar-link" href="/index.html">AI scanner</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link tvg-navbar-link" href="/pages/quiz.html">Quiz</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main class="camera container">
+    <h1>Webcam of afbeelding uploaden</h1>
+
+    <!-- Webcam preview -->
+    <video id="video" autoplay playsinline width="320" height="240"></video>
+    <button id="snap" class="btn tvg-btn-primary">Neem foto</button>
+
+    <!-- Bestandsupload -->
+    <div class="mb-3 col col-6">
+        <label for="fileInput" class="form-label">Upload een foto</label>
+        <input class="form-control" type="file" id="fileInput">
+    </div>
+
+    <!-- Preview -->
+    <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
+    <img id="preview" alt="Preview" width="320" height="240"/>
+
+    <!-- Alleen tonen als er preview is -->
+    <div id="actionButtons">
+        <button id="removePreview" class="btn-primary btn">Verwijder preview</button>
+        <button id="upload">Upload naar backend</button>
+    </div>
+
+</main>
+
+
+<script src="/common/js/bootstrap.min.js"></script>
+<script src="/common/js/camera.js"></script>
+</body>
+</html>

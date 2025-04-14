@@ -1,0 +1,26 @@
+.camera {
+
+    video, canvas, img {
+        display: block;
+        margin: 10px 0;
+        max-width: 100%;
+    }
+}
+
+#preview {
+    border: 1px solid #ccc;
+    display: none; /* standaard onzichtbaar */
+}
+
+#actionButtons {
+    display: none;
+}
+
+.tvg-btn-primary {
+    color: var(--text-on-dark);
+    background-color: var(--secondary);
+    &:hover, &:active {
+        color: var(--text-on-dark);
+        background-color: var(--secondary-200);
+    }
+}
