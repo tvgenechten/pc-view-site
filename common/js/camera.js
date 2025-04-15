@@ -11,12 +11,29 @@ const context = canvas.getContext('2d');
 let imageBlob = null;
 
 function updateUI(show) {
+
+
     preview.style.display = show ? 'block' : 'none';
     actionButtons.style.display = show ? 'block' : 'none';
+    const placeholders = document.querySelectorAll('.removepreview, .placeholder-glow, .placeholder');
+    placeholders.forEach(function (element) {
+        if (show) {
+            element.classList.remove('d-none');  // Verwijder de 'd-none' class als 'show' waar is
+        } else {
+            element.classList.add('d-none');     // Voeg de 'd-none' class toe als 'show' niet waar is
+        }
+    });
 }
 
+// Zorg ervoor dat je de initiële staat van de placeholders aanpast bij het laden van de pagina
+document.addEventListener('DOMContentLoaded', function () {
+    // Zet de initiële zichtbaarheid van de placeholders, bijvoorbeeld gebaseerd op een startwaarde van show
+    const show = false;  // Zet hier de gewenste startwaarde voor show (bijvoorbeeld true of false)
+    updateUI(show);
+});
+
 // Start webcam
-navigator.mediaDevices.getUserMedia({ video: true })
+navigator.mediaDevices.getUserMedia({video: true})
     .then((stream) => {
         video.srcObject = stream;
     })
@@ -32,6 +49,10 @@ snapButton.addEventListener('click', () => {
         preview.src = URL.createObjectURL(blob);
         updateUI(true);
     }, 'image/png');
+
+    document.querySelector('#resultClass').innerHTML = '<span class="placeholder col-6"></span>';
+    document.querySelector('#resultScore').innerHTML = '<span class="placeholder col-6"></span>';
+
 });
 
 // Handmatige afbeelding uploaden
@@ -59,18 +80,40 @@ uploadButton.addEventListener('click', () => {
         return;
     }
 
-    const formData = new FormData();
-    formData.append('image', imageBlob, 'foto.png');
+    const reader = new FileReader();
+    reader.onloadend = () => {
+        const base64Data = reader.result.split(',')[1]; // verwijder 'data:image/png;base64,...'
 
-    fetch('/upload', {
-        method: 'POST',
-        body: formData
-    })
-        .then(response => response.text())
-        .then(result => {
-            alert("Upload gelukt: " + result);
+        fetch('http://localhost:8000/data', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                filename: 'foto.png',
+                image: base64Data
+            })
         })
-        .catch(error => {
-            console.error("Upload mislukt:", error);
-        });
+            .then(response => response.json())  // Verander naar .json() om de JSON-respons te parsen
+            .then(result => {
+                // Resultaat wordt als een object binnengekomen, dus je kunt er nu toegang toe krijgen.
+                console.log(result);
+
+                // De gewenste data is nu beschikbaar in result.result.class en result.result.score
+                const cpuClass = result.result.class;
+                const score = result.result.score;
+
+                // Toon het resultaat bijvoorbeeld in een alert of op de pagina
+                // alert(`Class: ${cpuClass}, Score: ${score}`);
+
+                // Of toon het resultaat in een HTML-element
+                document.querySelector('#resultClass').innerText = `Class: ${cpuClass}`;
+                document.querySelector('#resultScore').innerText = `Score: ${score}`;
+            })
+            .catch(error => {
+                console.error("Upload mislukt:", error);
+            });
+    };
+
+    reader.readAsDataURL(imageBlob); // start base64 conversie
 });

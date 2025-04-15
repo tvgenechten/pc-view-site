@@ -1,6 +1,7 @@
 .camera {
 
     video, canvas, img {
+        border-radius: 7.5%;
         display: block;
         margin: 10px 0;
         max-width: 100%;

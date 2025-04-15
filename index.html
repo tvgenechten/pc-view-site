@@ -49,7 +49,7 @@
     <!-- Bestandsupload -->
     <div class="mb-3 col col-6">
         <label for="fileInput" class="form-label">Upload een foto</label>
-        <input class="form-control" type="file" id="fileInput">
+        <input class="form-control" type="file" id="fileInput" accept=".jpg, .jpeg, .png" onchange="validateFileSize()">
     </div>
 
     <!-- Preview -->
@@ -62,10 +62,17 @@
         <button id="upload">Upload naar backend</button>
     </div>
 
+    <div class="removepreview" aria-hidden="true">
+        <p class="placeholder-glow" id="resultClass"><span class="placeholder col-6" ></span></p>
+        <p class=" placeholder-glow" id="resultScore"><span class="placeholder col-6" ></span></p>
+    </div>
+
+
 </main>
 
 
 <script src="/common/js/bootstrap.min.js"></script>
+<script src="/common/js/filevalidator.js"></script>
 <script src="/common/js/camera.js"></script>
 </body>
 </html>
