@@ -16,9 +16,9 @@
         <div class="container">
             <div class="d-flex">
                 <a class="navbar-brand tvg-navbar-brand-link d-flex align-items-center justify-content-center" href="#"><img
-                    class="col-2" src="/common/images/logo-nt-white.svg"
-                    alt="Logo PC Vieuw"><span
-                    class="tvg-navbar-brand-text">&nbsp;PC&nbsp;View</span></a>
+                        class="col-2" src="/common/images/logo-nt-white.svg"
+                        alt="Logo PC Vieuw"><span
+                        class="tvg-navbar-brand-text">&nbsp;PC&nbsp;View</span></a>
                 <button class="navbar-toggler tvg-navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav tvg-navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link tvg-navbar-link" href="/index.html">AI scanner</a>
+                        <a class="nav-link tvg-navbar-link" href="/index.html">AI&nbsp;scanner</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link tvg-navbar-link" href="/pages/quiz.html">Quiz</a>
@@ -39,32 +39,61 @@
     </nav>
 </header>
 
-<main class="camera container">
-    <h1>Webcam of afbeelding uploaden</h1>
+<main class="camera container d-flex flex-column align-items-center">
+    <h1 class="text-center">Webcam of afbeelding uploaden</h1>
 
-    <!-- Webcam preview -->
-    <video id="video" autoplay playsinline width="320" height="240"></video>
-    <button id="snap" class="btn tvg-btn-primary">Neem foto</button>
+    <div class="col-12 col-md-10 col-lg-8 col-xl-6">
+        <div class="position-relative">
+            <video id="video" autoplay playsinline class="col-12 mb-0"></video>
+            <button id="snap" class="camera-outer-circle btn" onclick="fileNameSetSnap()">
+            <span class="camera-button-outer-transparent">
+                <span class="camera-button-inner-circle">
+                </span>
+            </span>
+            </button>
+            <img id="preview" class="col-12" alt="Preview"/>
+        </div>
+        <div class="buttons-camera-extra d-flex">
+            <div class="col-8 p-2">
+                <label for="fileInput" class="form-label d-none">Upload bestand</label>
+                <input class="form-control d-none" type="file" id="fileInput" accept=".jpg, .jpeg, .png"
+                       onchange="validateFileSize(); updateFileName();">
+                <button class="btn btn-info" onclick="document.getElementById('fileInput').click(); resetResult();"><i
+                        class="fa-solid fa-folder-open"></i> Foto kiezen
+                </button>
+                <span id="fileName" class="ms-2"></span>
+                <button class="btn removepreview" id="removePreview" onclick="fileNameReset()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="d-flex col-4 justify-content-end p-2">
+                <button class="btn btn-primary removepreview" id="upload">
+                    <i class="fa-solid fa-cloud-arrow-up"></i> upload
+                </button>
+            </div>
 
-    <!-- Bestandsupload -->
-    <div class="mb-3 col col-6">
-        <label for="fileInput" class="form-label">Upload een foto</label>
-        <input class="form-control" type="file" id="fileInput" accept=".jpg, .jpeg, .png" onchange="validateFileSize()">
+        </div>
+
     </div>
+
 
     <!-- Preview -->
     <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
-    <img id="preview" alt="Preview" width="320" height="240"/>
+
 
     <!-- Alleen tonen als er preview is -->
-    <div id="actionButtons">
-        <button id="removePreview" class="btn-primary btn">Verwijder preview</button>
-        <button id="upload">Upload naar backend</button>
-    </div>
 
-    <div class="removepreview" aria-hidden="true">
-        <p class="placeholder-glow" id="resultClass"><span class="placeholder col-6" ></span></p>
-        <p class=" placeholder-glow" id="resultScore"><span class="placeholder col-6" ></span></p>
+
+    <div class="removepreview col-12" aria-hidden="true">
+        <div class="d-flex justify-content-center align-items-center flex-column">
+            <p class="placeholder-glow" id="resultClass"><span
+                class="placeholder col-6"></span></p>
+            <p class=" placeholder-glow" id="resultScore"><span class="placeholder col-6"></span></p>
+            <div id="progressBarOuter" class="progress col-6 d-none" role="progressbar" aria-label="Example with label" aria-valuemin="0"
+                 aria-valuemax="100">
+                <div id="progressBar" class="progress-bar d-none" style="width: 0%">0%</div>
+            </div>
+        </div>
     </div>
 
 
@@ -74,5 +103,6 @@
 <script src="/common/js/bootstrap.min.js"></script>
 <script src="/common/js/filevalidator.js"></script>
 <script src="/common/js/camera.js"></script>
+<script src="/common/js/filename.js"></script>
 </body>
 </html>
