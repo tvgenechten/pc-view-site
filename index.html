@@ -45,7 +45,7 @@
     <div class="col-12 col-md-10 col-lg-8 col-xl-6">
         <div class="position-relative">
             <video id="video" autoplay playsinline class="col-12 mb-0"></video>
-            <button id="snap" class="camera-outer-circle btn" onclick="fileNameSetSnap()">
+            <button id="snap" class="camera-outer-circle btn" onclick="fileNameSetSnap(); resetResult();">
             <span class="camera-button-outer-transparent">
                 <span class="camera-button-inner-circle">
                 </span>
@@ -62,7 +62,7 @@
                         class="fa-solid fa-folder-open"></i> Foto kiezen
                 </button>
                 <span id="fileName" class="ms-2"></span>
-                <button class="btn removepreview" id="removePreview" onclick="fileNameReset()">
+                <button class="btn removepreview" id="removePreview" onclick="fileNameReset(); resetResult()">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
@@ -81,17 +81,22 @@
     <canvas id="canvas" width="320" height="240" style="display:none;"></canvas>
 
 
-    <!-- Alleen tonen als er preview is -->
+    <!-- Alleen tonen als er geupload is -->
 
 
-    <div class="removepreview col-12" aria-hidden="true">
+    <div id="removeresult" class="d-none col-12" aria-hidden="true">
         <div class="d-flex justify-content-center align-items-center flex-column">
-            <p class="placeholder-glow" id="resultClass"><span
-                class="placeholder col-6"></span></p>
-            <p class=" placeholder-glow" id="resultScore"><span class="placeholder col-6"></span></p>
-            <div id="progressBarOuter" class="progress col-6 d-none" role="progressbar" aria-label="Example with label" aria-valuemin="0"
-                 aria-valuemax="100">
-                <div id="progressBar" class="progress-bar d-none" style="width: 0%">0%</div>
+            <div class="d-flex">
+                <h3 id="title-result" class="">Jij hebt een&nbsp;</h3>
+                <h3 class="placeholder-glow" id="resultClass"><span
+                        class="placeholder col-6"></span></h3>
+            </div>
+            <!--            <p class=" placeholder-glow" id="resultScore"><span class="placeholder col-6"></span></p>-->
+            <div id="progressBarOuter" class="progress col-12 col-md-10 col-lg-8 col-xl-6" role="progressbar" aria-label="Example with label"
+                 aria-valuemin="0"
+                 aria-valuemax="100" style="height: 30px">
+                <div id="progressBar" class="progress-bar" style="width: 0%; height: 30px; font-size: 20px;">0%
+                </div>
             </div>
         </div>
     </div>
