@@ -1,0 +1,14 @@
+footer {
+    background-color: var(--primary-500);
+    color: white;
+}
+
+
+footer a {
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+

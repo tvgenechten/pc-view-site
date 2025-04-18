@@ -1,0 +1,29 @@
+.btnc-primary {
+    color: white;
+    background-color: var(--primary-400);
+    &:hover {
+        color: #fff;
+        background-color: var(--primary-300);
+    }
+    &:active {
+        color: #fff!important;
+        background-color: var(--primary-200)!important;
+        transform: scale(0.98);
+    }
+
+}
+
+.btnc-secondary {
+    color: white;
+    background-color: var(--secondary-400);
+    &:hover {
+        color: #fff;
+        background-color: var(--secondary-300);
+    }
+    &:active {
+        color: #fff!important;
+        background-color: var(--secondary-200)!important;
+        transform: scale(0.98);
+    }
+
+}

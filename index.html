@@ -55,21 +55,25 @@
         </div>
         <div class="buttons-camera-extra p-2 d-flex flex-column">
             <div class="d-flex col-12">
-                <div class="col-8 p-2">
-                    <label for="fileInput" class="form-label d-none">Upload bestand</label>
-                    <input class="form-control d-none" type="file" id="fileInput" accept=".jpg, .jpeg, .png"
-                           onchange="validateFileSize(); updateFileName();">
-                    <button class="btn btn-info" onclick="document.getElementById('fileInput').click(); resetResult();">
-                        <i
-                                class="fa-solid fa-folder-open"></i> Foto kiezen
-                    </button>
-                    <span id="fileName" class="ms-2"></span>
-                    <button class="btn removepreview" id="removePreview" onclick="fileNameReset(); resetResult()">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
+                <div class="col-8 p-2 d-flex flex-column">
+                    <div>
+                        <label for="fileInput" class="form-label d-none">Upload bestand</label>
+                        <input class="form-control d-none" type="file" id="fileInput" accept=".jpg, .jpeg, .png"
+                               onchange="validateFileSize(); updateFileName();">
+                        <button class="btn btnc-secondary"
+                                onclick="document.getElementById('fileInput').click(); resetResult();">
+                            <i
+                                    class="fa-solid fa-folder-open"></i> Foto kiezen
+                        </button>
+                    </div>
+                    <div>
+                        <span id="fileName" class="ms-2"></span>&nbsp;<button class="btn removepreview" id="removePreview" onclick="fileNameReset(); resetResult()">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="d-flex col-4 justify-content-end p-2">
-                    <button class="btn btn-primary removepreview" id="upload">
+                    <button class="btn btnc-primary removepreview" id="upload">
                         <i class="fa-solid fa-cloud-arrow-up"></i> upload
                     </button>
                 </div>
@@ -100,7 +104,7 @@
 
 </main>
 
-<footer class="bg-dark text-white text-center text-lg-start mt-5" >
+<footer class="text-center text-lg-start mt-5" >
     <div class="container p-4">
         <div class="row">
             <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
@@ -109,8 +113,12 @@
                     De AI tool die jouw opweg helpt in de wereld van PC's
                 </p>
             </div>
-            <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                <a class="link-light" href="https://github.com/nickhsm/PCview"><i class="fa-brands fa-github"></i> Github</a>
+            <div class="col-lg-3 col-md-6 mb-4 mb-md-0 d-flex flex-column">
+                <ul class="list-unstyled">
+                    <li class=""><a class="link-light" href="https://github.com/nickhsm/PCview"><i class="fa-brands fa-github"></i> Github</a></li>
+                    <li class=""><a class="link-light" href="/pages/about.html"><i class="fa-solid fa-circle-info"></i> About</a></li>
+                </ul>
+
 
             </div>
 
@@ -118,14 +126,14 @@
             <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
                 <h5 class="text-uppercase">Contact</h5>
                 <ul class="list-unstyled">
-                    <li><i class="bi bi-envelope me-2"></i> <a href="mailto:info@pcview.be">info@pcview.be</a></li>
+                    <li><a class="link-light" href="mailto:info@pcview.be"><i class="fa-solid fa-inbox"></i> info@pcview.be</a></li>
                 </ul>
             </div>
         </div>
     </div>
 
     <!-- Copyright -->
-    <div class="text-center p-3 bg-secondary">
+    <div class="text-center p-3">
         © 2025 PC View. Alle rechten voorbehouden.
     </div>
 </footer>
