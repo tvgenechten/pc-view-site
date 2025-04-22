@@ -1,0 +1,32 @@
+.bvg-vragen {
+    background-color: var(--tertiary-100);
+}
+
+.bvg-btn {
+    background-color: var(--secondary);
+    color: white !important;
+}
+
+.bvg-btn:hover {
+    background-color: var(--secondary-300) !important;
+    color: white !important;
+}
+
+.bvg-btn:checked + .btn {
+    background-color: var(--accent) !important;
+    border-color: var(--accent);
+    color: black !important;
+}
+
+.antwoord-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px; /* Pas dit aan naar wens */
+    text-align: center;
+    white-space: normal; /* Sta meerregelige tekst toe */
+}
+
+.bvg-titel {
+    color: var(--text-primary);
+}
