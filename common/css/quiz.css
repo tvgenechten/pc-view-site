@@ -30,3 +30,25 @@
 .bvg-titel {
     color: var(--text-primary);
 }
+
+.bvg-btn-submit {
+    background-color: var(--primary-300);
+}
+
+.bvg-btn-submit:hover {
+    background-color: var(--primary-200) !important;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+.bvg-btn-fout {
+    background-color: red; !important;
+    color: white !important;
+}
+
+.bvg-btn-juist {
+    background-color: green; !important;
+    color: white !important;
+}
