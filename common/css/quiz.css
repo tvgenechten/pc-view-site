@@ -12,9 +12,11 @@
     color: white !important;
 }
 
+
+
 .bvg-btn:checked + .btn {
     background-color: var(--accent) !important;
-    border-color: var(--accent);
+    border: 9px solid var(--accent);
     color: black !important;
 }
 
@@ -43,12 +45,29 @@ body {
     overflow-x: hidden;
 }
 
-.bvg-btn-fout {
-    background-color: red; !important;
+.bvg-btn:disabled + .btn {
+    background-color: var(--secondary) ;
+    color: white ;
+    cursor: not-allowed;
+}
+
+
+.bvg-btn-juist + .btn {
+    background-color: green !important;
     color: white !important;
 }
 
-.bvg-btn-juist {
-    background-color: green; !important;
+.bvg-btn-juist:checked + .btn {
+    background-color: green !important;
+    color: white !important;
+}
+
+.bvg-btn-fout + .btn {
+    background-color: red !important;
+    color: white !important;
+}
+
+.bvg-btn-fout:checked + .btn {
+    background-color: red !important;
     color: white !important;
 }

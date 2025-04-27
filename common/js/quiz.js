@@ -1,3 +1,130 @@
+const url = "http://127.0.0.1:8000/quiz";
+let vragen = [];
+let huidigeVraagIndex = 0;
+let juistCount = 0;
+
+function getQuiz() {
+    fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+            vragen = data["lijst met vragen"].sort(() => Math.random() - 0.5);
+            console.log(vragen)
+            toonVraag();
+        })
+        .catch((error) => console.log(error));
+}
+
+function toonVraag() {
+    const quizDiv = document.getElementById('quiz');
+    const vraag = vragen[huidigeVraagIndex];
+    const juisteAantal = vraag.antwoorden.filter(a => a.juist).length;
+    const inputType = juisteAantal > 1 ? 'checkbox' : 'radio';
+    const keuzeTekst = juisteAantal > 1
+        ? 'Kies 1 of meerdere antwoorden:'
+        : 'Kies 1 antwoord:';
+
+    let antwoordenHTML = '';
+    vraag.antwoorden.forEach((antwoord, index) => {
+        antwoordenHTML += `      
+        <div class="col-xl-5 col-12 m-2">
+            <input type="${inputType}" class="bvg-btn btn-check col-12" id="input-${index}" name="antwoord" autocomplete="off" data-juist="${antwoord.juist}">
+            <label class="btn bvg-btn col-12 antwoord-label" for="input-${index}" id="label-${index}">${antwoord.antwoord}</label>
+        </div>
+    `;
+    });
+
+
+    quizDiv.innerHTML = `
+        <H3 class="bvg-titel">${vraag.vraag}</H3>
+        <p>${keuzeTekst}</p>
+
+        <div class="d-flex gap-2 flex-wrap align-items-center justify-content-center">
+        ${antwoordenHTML}            
+        </div>
+      `;
+
+    document.getElementById('checkBtn').style.display = 'inline';
+    document.getElementById('nextBtn').style.display = 'none';
+}
+
+function controleerAntwoord() {
+    const inputs = document.getElementsByName('antwoord');
+    if (inputs.length === 0) return;
+
+    let geselecteerd = false;
+    let vraagJuist = true;
+
+    inputs.forEach((input, index) => {
+        const label = document.getElementById(`label-${index}`);
+
+        // Verwijder tijdelijk de disabled status om de kleuren toe te passen
+        input.disabled = false;
+
+        if (input.checked) {
+            geselecteerd = true;
+        }
+
+        // Controleer of het antwoord juist is
+        if (input.dataset.juist === 'true') {
+            // Voeg de juiste kleurklasse toe aan zowel input als label
+            input.classList.add('bvg-btn-juist');
+            label.classList.add('bvg-btn-juist');
+        }
+
+        // Controleer of het antwoord fout is
+        if (input.checked && input.dataset.juist === 'false') {
+            // Voeg de fout kleurklasse toe aan zowel input als label
+            input.classList.add('bvg-btn-fout');
+            label.classList.add('bvg-btn-fout');
+            vraagJuist = false;
+        }
+
+        // Zet de disabled status weer aan
+        input.disabled = true;
+    });
+
+    // Als er geen antwoord is geselecteerd
+    if (!geselecteerd) {
+        alert('Gelieve een antwoord te selecteren.');
+        return;
+    }
+
+    // Zet alle labels uit na controle
+    document.querySelectorAll('label').forEach(l => l.classList.add('disabled'));
+
+    // Verhoog de score als het antwoord juist is
+    if (vraagJuist) juistCount++;
+
+    // Verberg de 'check' knop en toon de 'volgende' knop
+    document.getElementById('checkBtn').style.display = 'none';
+    document.getElementById('nextBtn').style.display = 'inline';
+}
+
+
+
+
+function volgendeVraag() {
+    huidigeVraagIndex++;
+
+    if (huidigeVraagIndex < vragen.length) {
+        toonVraag();
+    } else {
+        document.getElementById('quiz').innerHTML = '';
+        document.getElementById('checkBtn').style.display = 'none';
+        document.getElementById('nextBtn').style.display = 'none';
+        document.getElementById('resultaat').textContent = `Je had ${juistCount} van de ${vragen.length} vragen juist.`;
+    }
+}
+
+// Start quiz ophalen bij laden
+getQuiz();
+
+
+
+
+
+
+//verbetering:
 const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
 const appendAlert = (message, type) => {
     const wrapper = document.createElement('div')

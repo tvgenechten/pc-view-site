@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz met directe feedback</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .card { border: 1px solid #ccc; border-radius: 8px; padding: 15px; margin-bottom: 20px; }
+    .card h3 { margin-top: 0; }
+    label { display: block; margin-bottom: 8px; padding: 5px; border-radius: 4px; }
+    .juist { background-color: #c8e6c9; }
+    .fout { background-color: #ffcdd2; }
+    .disabled { pointer-events: none; opacity: 0.7; }
+    button { margin-top: 15px; }
+  </style>
+</head>
+<body>
+
+<div id="quiz"></div>
+<button id="checkBtn" onclick="controleerAntwoord()">Controleer</button>
+<button id="nextBtn" onclick="volgendeVraag()" style="display:none;">Volgende</button>
+<p id="resultaat"></p>
+
+<script>
+  const url = "http://127.0.0.1:8000/quiz";
+  let vragen = [];
+  let huidigeVraagIndex = 0;
+  let juistCount = 0;
+
+  function getQuiz() {
+    fetch(url)
+            .then((response) => response.json())
+            .then((data) => {
+              vragen = data["lijst met vragen"].sort(() => Math.random() - 0.5);
+              toonVraag();
+            })
+            .catch((error) => console.log(error));
+  }
+
+  function toonVraag() {
+    const quizDiv = document.getElementById('quiz');
+    const vraag = vragen[huidigeVraagIndex];
+    const juisteAantal = vraag.antwoorden.filter(a => a.juist).length;
+    const inputType = juisteAantal > 1 ? 'checkbox' : 'radio';
+    const keuzeTekst = juisteAantal > 1
+            ? 'Kies 1 of meerdere antwoorden:'
+            : 'Kies 1 antwoord:';
+
+    let antwoordenHTML = '';
+    vraag.antwoorden.forEach((antwoord, index) => {
+      antwoordenHTML += `
+          <label id="label-${index}">
+            <input type="${inputType}" name="antwoord" value="${antwoord.juist}">
+            ${antwoord.antwoord}
+          </label>
+        `;
+    });
+
+    quizDiv.innerHTML = `
+        <div class="card">
+          <h3>${vraag.vraag}</h3>
+          <p><em>${keuzeTekst}</em></p>
+          <div>${antwoordenHTML}</div>
+        </div>
+      `;
+
+    document.getElementById('checkBtn').style.display = 'inline';
+    document.getElementById('nextBtn').style.display = 'none';
+  }
+
+  function controleerAntwoord() {
+    const inputs = document.getElementsByName('antwoord');
+    if (inputs.length === 0) return;
+
+    let geselecteerd = false;
+    let vraagJuist = true;
+
+    inputs.forEach((input, index) => {
+      const label = document.getElementById(`label-${index}`);
+      if (input.checked) geselecteerd = true;
+
+      if (input.value === 'true') {
+        label.classList.add('juist');
+      }
+
+      if (input.checked && input.value === 'false') {
+        label.classList.add('fout');
+        vraagJuist = false;
+      }
+    });
+
+    if (!geselecteerd) {
+      alert('Gelieve een antwoord te selecteren.');
+      return;
+    }
+
+    // disable inputs na controle
+    inputs.forEach(input => input.disabled = true);
+    document.querySelectorAll('label').forEach(l => l.classList.add('disabled'));
+
+    if (vraagJuist) juistCount++;
+
+    document.getElementById('checkBtn').style.display = 'none';
+    document.getElementById('nextBtn').style.display = 'inline';
+  }
+
+  function volgendeVraag() {
+    huidigeVraagIndex++;
+
+    if (huidigeVraagIndex < vragen.length) {
+      toonVraag();
+    } else {
+      document.getElementById('quiz').innerHTML = '';
+      document.getElementById('checkBtn').style.display = 'none';
+      document.getElementById('nextBtn').style.display = 'none';
+      document.getElementById('resultaat').textContent = `Je had ${juistCount} van de ${vragen.length} vragen juist.`;
+    }
+  }
+
+  // Start quiz ophalen bij laden
+  getQuiz();
+</script>
+
+</body>
+</html>
