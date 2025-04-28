@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>PC View</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="PC Vieuw">
+    <meta name="author" content="PC View">
     <meta name="description" content="De AI tool die jouw opweg helpt in de wereld van PC's">
     <link rel="shortcut icon" href="/common/images/favicon.svg" type="image/x-icon">
     <link rel="stylesheet" href="/common/css/bootstrap.min.css">
@@ -40,44 +40,20 @@
 </header>
 
 <main class="container d-flex align-items-center justify-content-center flex-column">
-    <div class="bvg-vragen rounded col-xl-6 col-lg-8 col-lg-10 col-sm-12 mt-3 p-2 text-center">
-        <H3 class="bvg-titel">Wat gebeurt er met je data als de stroom wordt onderbroken?</H3>
-
-        <div class="d-flex gap-2 flex-wrap align-items-center justify-content-center">
-            <div class="col-xl-5 col-12 m-2">
-                <input type="checkbox" class="bvg-btn btn-check col-12" id="antwoord1" autocomplete="off">
-                <label class="btn bvg-btn col-12 antwoord-label" for="antwoord1">Al het data wordt opgeslagen</label>
-            </div>
-
-            <div class="col-xl-5 col-12 m-2">
-                <input type="checkbox" class="bvg-btn btn-check col-12" id="antwoord2" autocomplete="off">
-                <label class="btn bvg-btn col-12 antwoord-label" for="antwoord2">Al het data in RAM is veilig, maar gegevens op extern geheugen is weg</label>
-            </div>
-
-            <div class="col-xl-5 col-12 m-2">
-                <input type="checkbox" class="btn-check bvg-btn col-12" id="antwoord3" autocomplete="off">
-                <label class="btn bvg-btn col-12 antwoord-label" for="antwoord3">Al het data in RAM is weg, maar gegevens op extern geheugen zijn veilig</label>
-            </div>
-
-            <div class="col-xl-5 col-12 m-2">
-                <input type="checkbox" class="btn-check bvg-btn col-12" id="antwoord4" autocomplete="off">
-                <label class="btn bvg-btn col-12 antwoord-label" for="antwoord4">Al het data is weg</label>
-            </div>
-
-            <div class="col-xl-5 col-12 m-2">
-                <input type="checkbox" class="btn-check bvg-btn col-12" id="antwoord5" autocomplete="off">
-                <label class="btn bvg-btn col-12 antwoord-label" for="antwoord5">Antwoord 5</label>
-            </div>
-        </div>
+    <div  class="bvg-vragen rounded col-xl-6 col-lg-8 col-lg-10 col-sm-12 mt-3 p-2 text-center">
+        <div id="quiz" class="col-12"></div>
         <div class="d-flex justify-content-between w-100">
-            <button class="btn bvg-btn bvg-btn-submit" type="submit">Stop</button>
-            <input class="btn bvg-btn bvg-btn-submit" type="submit" value="Submit">
+            <button class="btn bvg-btn bvg-btn-submit">Stop</button>
+            <button class="btn bvg-btn bvg-btn-submit" onclick="controleerAntwoord()" id="checkBtn">Submit</button>
+            <button class="btn bvg-btn bvg-btn-submit" onclick="volgendeVraag()" id="nextBtn" style="display:none;">Volgende</button>
         </div>
+
     </div>
     <div class="col-xl-6 col-lg-8 col-lg-10 col-sm-12 mt-2">
         <div id="liveAlertPlaceholder"></div>
         <button type="button" class="btn btn-primary" id="liveAlertBtn">Show live alert</button>
     </div>
+    <p id="resultaat"></p>
 </main>
 
 <footer class="text-center text-lg-start mt-3" >
