@@ -106,7 +106,7 @@ uploadButton.addEventListener('click', () => {
     reader.onloadend = () => {
         const base64Data = reader.result.split(',')[1];
 
-        fetch('http://localhost:8000/upload', {
+        fetch('http://nc.tiboit.org/upload', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
