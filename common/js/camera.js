@@ -30,13 +30,32 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Webcam starten
-navigator.mediaDevices.getUserMedia({video: true})
-    .then((stream) => {
-        video.srcObject = stream;
+let currentFacingMode = 'user';
+
+function startWebcam(facingMode = 'user') {
+    if (window.currentStream) {
+        window.currentStream.getTracks().forEach(track => track.stop());
+    }
+
+    navigator.mediaDevices.getUserMedia({
+        video: { facingMode: facingMode }
     })
-    .catch((err) => {
-        console.error("Kan webcam niet starten:", err);
-    });
+        .then((stream) => {
+            document.getElementById('video').srcObject = stream;
+            window.currentStream = stream;
+        })
+        .catch((err) => {
+            console.error("Kan webcam niet starten:", err);
+        });
+}
+
+function switchCamera() {
+    currentFacingMode = (currentFacingMode === 'user') ? 'environment' : 'user';
+    startWebcam(currentFacingMode);
+}
+
+// Start met frontcamera
+startWebcam(currentFacingMode);
 
 // PNG of JPEG omzetten naar JPG
 function convertToJPG(fileOrBlob, callback) {
@@ -61,6 +80,8 @@ function convertToJPG(fileOrBlob, callback) {
 
 // Foto nemen met webcam
 snapButton.addEventListener('click', () => {
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     canvas.toBlob((blob) => {
         convertToJPG(blob, (jpgBlob, dataUrl) => {
@@ -106,7 +127,7 @@ uploadButton.addEventListener('click', () => {
     reader.onloadend = () => {
         const base64Data = reader.result.split(',')[1];
 
-        fetch('http://nc.tiboit.org/upload', {
+        fetch('https://pcview.tiboit.org/upload', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
