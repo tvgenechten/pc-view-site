@@ -1,4 +1,4 @@
-const url = "http://127.0.0.1:8000/quiz";
+const url = "https://pcview.tiboit.org/quiz";
 let vragen = [];
 let huidigeVraagIndex = 0;
 let juistCount = 0;
