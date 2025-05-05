@@ -1,4 +1,4 @@
-const url = "https://pcview.tiboit.org/quiz";
+const url = "http://127.0.0.1:8000/quiz";
 let vragen = [];
 let huidigeVraagIndex = 0;
 let juistCount = 0;
@@ -112,6 +112,10 @@ function volgendeVraag() {
         document.getElementById('quiz').innerHTML = '';
         document.getElementById('checkBtn').style.display = 'none';
         document.getElementById('nextBtn').style.display = 'none';
+        document.getElementById('stopBtn').style.display = 'none';
+        let quizInner = document.getElementById('quizInner');
+        quizInner.classList.replace('justify-content-between', 'justify-content-center');
+        quizInner.classList.add('align-items-center');
         document.getElementById('resultaat').textContent = `Je had ${juistCount} van de ${vragen.length} vragen juist.`;
     }
 }
