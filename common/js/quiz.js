@@ -56,46 +56,49 @@ function controleerAntwoord() {
 
     inputs.forEach((input, index) => {
         const label = document.getElementById(`label-${index}`);
-
-        // Verwijder tijdelijk de disabled status om de kleuren toe te passen
         input.disabled = false;
 
         if (input.checked) {
             geselecteerd = true;
-        }
 
-        // Controleer of het antwoord juist is
-        if (input.dataset.juist === 'true') {
-            // Voeg de juiste kleurklasse toe aan zowel input als label
-            input.classList.add('bvg-btn-juist');
-            label.classList.add('bvg-btn-juist');
+            if (input.dataset.juist === 'true') {
+                input.classList.add('bvg-btn-juist');
+                label.classList.add('bvg-btn-juist');
+            } else {
+                input.classList.add('bvg-btn-fout');
+                label.classList.add('bvg-btn-fout');
+                vraagJuist = false;
+            }
         }
-
-        // Controleer of het antwoord fout is
-        if (input.checked && input.dataset.juist === 'false') {
-            // Voeg de fout kleurklasse toe aan zowel input als label
-            input.classList.add('bvg-btn-fout');
-            label.classList.add('bvg-btn-fout');
-            vraagJuist = false;
-        }
-
-        // Zet de disabled status weer aan
-        input.disabled = true;
     });
 
-    // Als er geen antwoord is geselecteerd
     if (!geselecteerd) {
-        alert('Gelieve een antwoord te selecteren.');
+        appendAlert('Gelieve een antwoord te selecteren.', 'warning');
         return;
     }
 
-    // Zet alle labels uit na controle
+    // Als het antwoord fout is → toon alsnog de juiste antwoorden
+    if (!vraagJuist) {
+        inputs.forEach((input, index) => {
+            const label = document.getElementById(`label-${index}`);
+            if (input.dataset.juist === 'true') {
+                input.classList.add('bvg-btn-juist');
+                label.classList.add('bvg-btn-juist');
+            }
+        });
+    }
+
+    // Disable inputs na controle
+    inputs.forEach(input => {
+        input.disabled = true;
+    });
+
+    // Labels disablen
     document.querySelectorAll('label').forEach(l => l.classList.add('disabled'));
 
-    // Verhoog de score als het antwoord juist is
+    // Score verhogen als de vraag volledig juist beantwoord is
     if (vraagJuist) juistCount++;
 
-    // Verberg de 'check' knop en toon de 'volgende' knop
     document.getElementById('checkBtn').style.display = 'none';
     document.getElementById('nextBtn').style.display = 'inline';
 }
