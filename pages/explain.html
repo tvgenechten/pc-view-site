@@ -42,8 +42,9 @@
 
 
 
-<main class="container">
-  <div class="col-6 offset-lg-3" id="uitleg"></div>
+<main class="container mt-2">
+  <a class="offset-lg-3 link-info" href="/index.html"><i class="fa-solid fa-angle-left"></i> Terug</a>
+  <div class="col-12 col-lg-6 offset-lg-3" id="uitleg"></div>
 </main>
 
 <footer class="text-center text-lg-start mt-5" >
@@ -112,7 +113,9 @@
                     <h1>${type}</h1>
 
 
-                <div class="uitleg">${uitleg}</div>`;
+                <div class="uitleg">${uitleg}</div>
+<div><a class="link-info" href="/pages/quiz.html">Maak hier vragen over dit onderdeel</a></div>
+            `;
 
             document.getElementById("uitleg").innerHTML = uitlegHtml;
           })

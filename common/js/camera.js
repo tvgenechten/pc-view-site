@@ -127,7 +127,7 @@ uploadButton.addEventListener('click', () => {
     reader.onloadend = () => {
         const base64Data = reader.result.split(',')[1];
 
-        fetch('https://pcview.tiboit.org/upload', {
+        fetch('http://127.0.0.1:8000/upload', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -143,7 +143,8 @@ uploadButton.addEventListener('click', () => {
                 const score = result.result.score;
                 let roundedScore = score.toFixed(2);
 
-                document.querySelector('#resultClass').innerText = `${cpuClass}`;
+                document.querySelector('#resultClass').innerHTML = `
+                <a href="/pages/explain.html?type=${cpuClass}"> ${cpuClass} </a>`;
                 // document.querySelector('#resultScore').innerText = `Score: ${roundedScore}`;
                 document.querySelector('#removeresult').classList.replace('d-none', 'd-block');
                 const progressBar = document.querySelector('#progressBar');
