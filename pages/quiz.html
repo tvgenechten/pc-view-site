@@ -42,8 +42,9 @@
 <main class="container d-flex align-items-center justify-content-center flex-column">
     <div  class="bvg-vragen rounded col-xl-6 col-lg-8 col-lg-10 col-sm-12 mt-3 p-2 text-center">
         <div id="quiz" class="col-12"></div>
-        <div class="d-flex justify-content-between w-100">
-            <button class="btn bvg-btn bvg-btn-submit">Stop</button>
+        <div id="quizInner" class="d-flex justify-content-between w-100">
+            <button id="stopBtn" class="btn bvg-btn bvg-btn-submit">Stop</button>
+            <p id="resultaat" class=""></p>
             <button class="btn bvg-btn bvg-btn-submit" onclick="controleerAntwoord()" id="checkBtn">Submit</button>
             <button class="btn bvg-btn bvg-btn-submit" onclick="volgendeVraag()" id="nextBtn" style="display:none;">Volgende</button>
         </div>
@@ -53,7 +54,7 @@
         <div id="liveAlertPlaceholder"></div>
         <button type="button" class="btn btn-primary" id="liveAlertBtn">Show live alert</button>
     </div>
-    <p id="resultaat"></p>
+
 </main>
 
 <footer class="text-center text-lg-start mt-3" >

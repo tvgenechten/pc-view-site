@@ -71,3 +71,9 @@ body {
     background-color: red !important;
     color: white !important;
 }
+
+#resultaat {
+    font-size: xx-large;
+    color: var(--text-primary);
+    font-family: "orbitron", "Orbitron", sans-serif;;
+}
