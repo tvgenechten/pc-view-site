@@ -1,4 +1,7 @@
-const url = "http://127.0.0.1:8000/quiz";
+const urlParams = new URLSearchParams(window.location.search);
+const classname = urlParams.get("classname");
+
+const url = `http://127.0.0.1:8000/quiz?classname=${classname}`;
 let vragen = [];
 let huidigeVraagIndex = 0;
 let juistCount = 0;
@@ -134,15 +137,20 @@ getQuiz();
 //verbetering:
 const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
 const appendAlert = (message, type) => {
-    const wrapper = document.createElement('div')
+    const wrapper = document.createElement('div');
     wrapper.innerHTML = [
-        `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+        `<div class="alert alert-${type} alert-dismissible fade show" role="alert">`,
         `   <div>${message}</div>`,
         '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
         '</div>'
-    ].join('')
+    ].join('');
 
-    alertPlaceholder.append(wrapper)
+    alertPlaceholder.append(wrapper);
+
+    const alertDiv = wrapper.querySelector('.alert');
+    const bsAlert = bootstrap.Alert.getOrCreateInstance(alertDiv);
+
+    return bsAlert; // return de instance
 }
 
 const alertTrigger = document.getElementById('liveAlertBtn')
