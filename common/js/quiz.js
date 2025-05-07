@@ -1,9 +1,14 @@
 const urlParams = new URLSearchParams(window.location.search);
 const classname = urlParams.get("classname");
 
-const url = `http://127.0.0.1:8000/quiz?classname=${classname}`;
+let vraagSelecterenAlert;
+let vraagUitlegAlert;
+
+
+const url = `https://pcview.tiboit.org/quiz?classname=${classname}`;
 let vragen = [];
 let huidigeVraagIndex = 0;
+let huidigeVraag;
 let juistCount = 0;
 
 function getQuiz() {
@@ -11,7 +16,6 @@ function getQuiz() {
         .then((response) => response.json())
         .then((data) => {
             vragen = data["lijst met vragen"].sort(() => Math.random() - 0.5);
-            console.log(vragen)
             toonVraag();
         })
         .catch((error) => console.log(error));
@@ -26,8 +30,13 @@ function toonVraag() {
         ? 'Kies 1 of meerdere antwoorden:'
         : 'Kies 1 antwoord:';
 
+    huidigeVraag = vragen[huidigeVraagIndex];
+
+    // Antwoorden random shufflen
+    const shuffledAntwoorden = vraag.antwoorden.sort(() => Math.random() - 0.5);
+
     let antwoordenHTML = '';
-    vraag.antwoorden.forEach((antwoord, index) => {
+    shuffledAntwoorden.forEach((antwoord, index) => {
         antwoordenHTML += `      
         <div class="col-xl-5 col-12 m-2">
             <input type="${inputType}" class="bvg-btn btn-check col-12" id="input-${index}" name="antwoord" autocomplete="off" data-juist="${antwoord.juist}">
@@ -35,7 +44,6 @@ function toonVraag() {
         </div>
     `;
     });
-
 
     quizDiv.innerHTML = `
         <H3 class="bvg-titel">${vraag.vraag}</H3>
@@ -48,7 +56,9 @@ function toonVraag() {
 
     document.getElementById('checkBtn').style.display = 'inline';
     document.getElementById('nextBtn').style.display = 'none';
+    document.getElementById('stopBtn').style.display = 'inline';
 }
+
 
 function controleerAntwoord() {
     const inputs = document.getElementsByName('antwoord');
@@ -61,8 +71,19 @@ function controleerAntwoord() {
         const label = document.getElementById(`label-${index}`);
         input.disabled = false;
 
+        if (vraagSelecterenAlert) {
+            try {
+                vraagSelecterenAlert.close();
+            } catch(e) {
+                console.warn("Kon alert niet sluiten:", e);
+            }
+            vraagSelecterenAlert = null;
+        }
+
         if (input.checked) {
             geselecteerd = true;
+            vraagUitlegAlert = appendAlert(huidigeVraag.uitleg, 'info');
+
 
             if (input.dataset.juist === 'true') {
                 input.classList.add('bvg-btn-juist');
@@ -76,7 +97,7 @@ function controleerAntwoord() {
     });
 
     if (!geselecteerd) {
-        appendAlert('Gelieve een antwoord te selecteren.', 'warning');
+        vraagSelecterenAlert = appendAlert('Gelieve een antwoord te selecteren.', 'warning');
         return;
     }
 
@@ -112,6 +133,19 @@ function controleerAntwoord() {
 function volgendeVraag() {
     huidigeVraagIndex++;
 
+
+
+    if (vraagUitlegAlert) {
+        try {
+            vraagUitlegAlert.close();
+        } catch(e) {
+            console.warn("Kon alert niet sluiten:", e);
+        }
+        vraagUitlegAlert = null;
+    }
+
+
+
     if (huidigeVraagIndex < vragen.length) {
         toonVraag();
     } else {
@@ -123,8 +157,53 @@ function volgendeVraag() {
         quizInner.classList.replace('justify-content-between', 'justify-content-center');
         quizInner.classList.add('align-items-center');
         document.getElementById('resultaat').textContent = `Je had ${juistCount} van de ${vragen.length} vragen juist.`;
+        document.getElementById('quiz').innerHTML = `<a class="link-info" href="/pages/quizscore.html">Terug naar het scoreoverzicht.</a>`;
+
+        localStorage.setItem(classname, JSON.stringify({juistCount, totaalVragen: vragen.length}));
+        const opgeslagenResultaat = JSON.parse(localStorage.getItem(classname));
+        console.log(opgeslagenResultaat);
+
     }
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('stopBtn').addEventListener('click', stopQuiz);
+});
+
+
+
+
+function stopQuiz() {
+    console.log('stopQuiz aangeroepen');
+
+    if (vraagUitlegAlert) {
+        try {
+            vraagUitlegAlert.close();
+        } catch(e) {
+            console.warn("Kon alert niet sluiten:", e);
+        }
+        vraagUitlegAlert = null;
+    }
+
+    document.getElementById('quiz').innerHTML = '';
+    document.getElementById('checkBtn').style.display = 'none';
+    document.getElementById('nextBtn').style.display = 'none';
+    document.getElementById('stopBtn').style.display = 'none';
+    let quizInner = document.getElementById('quizInner');
+    quizInner.classList.replace('justify-content-between', 'justify-content-center');
+    quizInner.classList.add('align-items-center');
+    document.getElementById('resultaat').textContent = `Je had ${juistCount} van de ${vragen.length} vragen juist.`;
+    document.getElementById('quiz').innerHTML = `<a class="link-info" href="/pages/quizscore.html">Terug naar het scoreoverzicht.</a>`;
+    localStorage.setItem(classname, JSON.stringify({juistCount, totaalVragen: vragen.length}));
+
+    const opgeslagenResultaat = JSON.parse(localStorage.getItem(classname));
+    console.log(opgeslagenResultaat);
+
+
+
+
+}
+
 
 // Start quiz ophalen bij laden
 getQuiz();

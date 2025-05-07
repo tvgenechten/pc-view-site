@@ -2,7 +2,7 @@
 <html lang="nl">
 <head>
   <meta charset="UTF-8">
-  <title>Uitleg</title>
+  <title>PC View score</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="author" content="PC View">
   <meta name="description" content="De AI tool die jouw opweg helpt in de wereld van PC's">
@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="/common/css/main.css">
 </head>
 <body>
+
 <header>
   <nav class="navbar navbar-expand-md tvg-navbar">
     <div class="container">
@@ -39,13 +40,17 @@
   </nav>
 </header>
 
+<main class="container d-flex align-items-center justify-content-center flex-column">
+  <h1>Je score's</h1>
+  <p>Druk op een onderdeel om hierover een quiz te maken:</p>
+  <ul class="list-group list-unstyled" id="scoreList">
 
+  </ul>
 
+  <button class="btn btn-danger mt-3">Reset score</button>
 
-<main class="container mt-2">
-  <a class="offset-lg-3 link-info" href="/index.html"><i class="fa-solid fa-angle-left"></i> Terug</a>
-  <div class="col-12 col-lg-6 offset-lg-3" id="uitleg"></div>
 </main>
+
 
 <footer class="text-center text-lg-start mt-5" >
   <div class="container p-4">
@@ -81,50 +86,8 @@
   </div>
 </footer>
 <script src="/common/js/funfact.js"></script>
+<script src="/common/js/score.js"></script>
 
-
-
-
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script>
-
-  const urlParams = new URLSearchParams(window.location.search);
-  const type = urlParams.get("type");
-
-  const apiUrl = `https://pcview.tiboit.org/uitleg?type=${encodeURIComponent(type)}`;
-
-
-  fetch(apiUrl)
-          .then(response => {
-            if (!response.ok) {
-              throw new Error("Fout bij ophalen van uitleg");
-            }
-            return response.json();
-          })
-          .then(data => {
-
-            const explanationText = data.explanation.replaceAll("\\n", "\n");
-
-            const uitleg = marked.parse(explanationText);
-
-            const uitlegHtml = `
-                    <h1>${type}</h1>
-
-
-                <div class="uitleg">${uitleg}</div>
-<div><a class="link-info" href="/pages/quiz.html?classname=${type}">Maak hier vragen over dit onderdeel</a></div>
-            `;
-
-            document.getElementById("uitleg").innerHTML = uitlegHtml;
-          })
-          .catch(error => {
-            document.getElementById("uitleg").innerText = "Kon uitleg niet ophalen: " + error.message;
-          });
-
-</script>
 
 </body>
 </html>
