@@ -2,36 +2,52 @@
 <html lang="nl">
 <head>
     <meta charset="UTF-8">
-    <title>PC View</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="PC View">
-    <meta name="description" content="De AI tool die jouw opweg helpt in de wereld van PC's">
-    <link rel="shortcut icon" href="/common/images/favicon.svg" type="image/x-icon">
-    <link rel="stylesheet" href="/common/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/common/css/main.css">
+    <title>Privacyverklaring</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <meta name="author"
+          content="PC View">
+    <meta name="description"
+          content="De AI tool die jouw opweg helpt in de wereld van PC's">
+    <link rel="shortcut icon"
+          href="/common/images/favicon.svg"
+          type="image/x-icon">
+    <link rel="stylesheet"
+          href="/common/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="/common/css/main.css">
 </head>
 <body>
 <header>
     <nav class="navbar navbar-expand-md tvg-navbar">
         <div class="container">
             <div class="d-flex">
-                <a class="navbar-brand tvg-navbar-brand-link d-flex align-items-center justify-content-center" href="/index.html"><img
-                        class="col-2" src="/common/images/logo-nt-white.svg"
+                <a class="navbar-brand tvg-navbar-brand-link d-flex align-items-center justify-content-center"
+                   href="/index.html"><img
+                        class="col-2"
+                        src="/common/images/logo-nt-white.svg"
                         alt="Logo PC Vieuw"><span
                         class="tvg-navbar-brand-text">&nbsp;PC&nbsp;View</span></a>
-                <button class="navbar-toggler tvg-navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler tvg-navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="collapse navbar-collapse"
+                 id="navbarSupportedContent">
                 <ul class="navbar-nav tvg-navbar-nav ms-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link tvg-navbar-link" href="/index.html">AI&nbsp;scanner</a>
+                        <a class="nav-link tvg-navbar-link"
+                           href="/index.html">AI&nbsp;scanner</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link tvg-navbar-link" href="/pages/quizscore.html">Quiz</a>
+                        <a class="nav-link tvg-navbar-link"
+                           href="/pages/quizscore.html">Quiz</a>
                     </li>
                 </ul>
             </div>
@@ -39,10 +55,12 @@
     </nav>
 </header>
 
-<main>
-<h1 class="text-center bvg-404">404</h1>
-    <p class="text-center bvg-404-tekst">De pagina die je zoekt is niet gevonden!</p>
+
+<main class="container mt-2">
+    <div class="col-12 col-lg-6 offset-lg-3"
+         id="privacy-content"></div>
 </main>
+
 <footer class="text-center text-lg-start mt-5">
     <div class="container p-4">
         <div class="row">
@@ -60,8 +78,8 @@
                     </li>
                     <li class=""><a class="link-light"
                                     href="/pages/about.html"><i class="fa-solid fa-circle-info"></i> About</a></li>
-                    <li class=""><a class="link-light"
-                                    href="/pages/privacy.html"><i class="fa-solid fa-shield-halved"></i>Privacy</a></li>
+                  <li class=""><a class="link-light"
+                                  href="/pages/privacy.html"><i class="fa-solid fa-shield-halved"></i>Privacy</a></li>
                 </ul>
 
 
@@ -86,6 +104,23 @@
 <script src="/common/js/funfact.js"></script>
 
 
-<script src="/common/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script>
+
+
+  fetch('/common/privacy/privacy.md')
+          .then(response => response.text())
+          .then(markdown => {
+            const htmlContent = marked.parse(markdown);
+            document.getElementById('privacy-content').innerHTML = htmlContent;
+          })
+          .catch(error => {
+            console.error('Fout bij het laden van de markdown:', error);
+          });
+
+
+
+</script>
+
 </body>
 </html>
